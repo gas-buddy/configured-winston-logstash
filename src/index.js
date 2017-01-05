@@ -19,6 +19,11 @@ export default class ConfiguredWinstonLogstash {
       console.error('logstash error', error.message, error.stack);
     });
     winston.info('Started LogStash logging');
+
+    // As a convenience, you can configure this module to REMOVE the console logger
+    if (opts.console === false) {
+      winston.remove(winston.transports.Console);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
