@@ -1,3 +1,4 @@
+import os from 'os';
 import assert from 'assert';
 import winston from 'winston';
 
@@ -7,12 +8,14 @@ export default class ConfiguredWinstonLogstash {
 
     // eslint-disable-next-line global-require, import/newline-after-import
     require('winston-logstash');
-    winston.add(winston.transports.Logstash, Object.assign({
+    const logConfig = Object.assign({
       level: 'info',
       port: opts.port || 9999,
       host: opts.hostname || 'logstash',
-      node_name: context.name,
-    }, opts.config));
+      label: context.name,
+      node_name: os.hostname(),
+    }, opts.config);
+    winston.add(winston.transports.Logstash, logConfig);
     const logTransport = winston.default.transports.logstash;
     logTransport.on('error', (error) => {
       // eslint-disable-next-line no-console
