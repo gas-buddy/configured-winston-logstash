@@ -17,7 +17,11 @@ build:
         export LOGSTASH_HOST=$LOGSTASH_PORT_9999_TCP_ADDR
         export LOGSTASH_PORT=$LOGSTASH_PORT_9999_TCP_PORT
 
-    - npm-test
+    - script:
+      name: test with coverage
+      code: |
+        npm run --silent ci-test
+        npm run --silent ci-cover
 
     - script:
       name: build

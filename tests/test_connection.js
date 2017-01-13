@@ -1,13 +1,12 @@
 import tap from 'tap';
-import Client from '../src/index';
+import { start, stop } from '../src/index';
 
 tap.test('test_connection', async (t) => {
   const config = {
-    hostname: process.env.LOGSTASH_HOST,
-    port: process.env.LOGSTASH_PORT,
+    host: process.env.LOGSTASH_HOST || 'logstash',
+    port: process.env.LOGSTASH_PORT || 9999,
   };
-  const lstash = new Client({ name: 'test' }, config);
-  await lstash.start();
-  await lstash.stop();
+  t.ok(start(config), 'start should return true');
+  await stop();
   t.ok('Should start and stop');
 });

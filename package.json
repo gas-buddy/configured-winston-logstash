@@ -1,12 +1,17 @@
 {
   "name": "@gasbuddy/configured-winston-logstash",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A configuration driven connection from winston to logstash",
   "main": "build/index.js",
+  "config": {
+    "coverage": "--lines=60 --statements=60 --functions=60 --branches=40"
+  },
   "scripts": {
     "test": "tap --node-arg=-r --node-arg=babel-register tests/*.js",
     "test-some": "tap --node-arg=-r --node-arg=babel-register",
-    "cover": "nyc --reporter=lcov npm test",
+    "cover": "cross-env BABEL_ENV=test nyc tap tests/test_*.js && nyc check-coverage $npm_package_config_coverage && nyc report --reporter=text",
+    "ci-test": "cross-env NODE_ENV=test nyc tap -Rtap tests/test_*.js | tee .tap_output | tap -Rspec -",
+    "ci-cover": "nyc check-coverage $npm_package_config_coverage",
     "lint": "eslint .",
     "build": "babel src --out-dir build",
     "prepublish": "npm run build"
@@ -25,6 +30,7 @@
     "babel-cli": "^6.4.5",
     "babel-preset-gasbuddy": "^1",
     "bluebird": "^3.2.1",
+    "cross-env": "^3.1.4",
     "eslint": "^3.1.0",
     "eslint-config-gasbuddy": "^1",
     "tap": "^8.0.0"
@@ -33,5 +39,18 @@
     "rabbot": "^1.0.6",
     "winston": "^2.3.0",
     "winston-logstash": "^0.3.0"
+  },
+  "nyc": {
+    "include": [
+      "src"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "reporter": [
+      "lcov"
+    ]
   }
 }
