@@ -1,6 +1,6 @@
 {
   "name": "@gasbuddy/configured-winston-logstash",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A configuration driven connection from winston to logstash",
   "main": "build/index.js",
   "config": {
