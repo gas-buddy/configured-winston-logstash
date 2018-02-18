@@ -36,7 +36,7 @@
     "tap": "^10.2.1"
   },
   "dependencies": {
-    "rabbot": "^1.0.6",
+    "rabbot": "^2.1.0",
     "winston": "^2.3.0",
     "winston-logstash": "^0.3.0"
   },
